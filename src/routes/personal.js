@@ -1,15 +1,12 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const router = Router();
-const pool = require('../database');
 
-/* const {getcocciones,
-    createcoccion,
-    getcoccion,
-    updatecoccion,
-    deletecoccion}= require('../controllers/coccion.controllers'); */
+const { getpersonal,
+    createpersona,
+    getpersona,
+    updatepersona,
+    deletepersona } = require('../controllers/personal.controllers');
 
-router.get('/', (req,res) => {
-res.send('Hello word');
-});
+router.route('/').get(getpersonal).post(createpersona);
 
 module.exports = router;
