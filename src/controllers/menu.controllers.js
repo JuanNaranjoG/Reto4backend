@@ -6,22 +6,17 @@ menuCtrl.getmenues = async (req, res) => {
     res.json(menu);
 };
 menuCtrl.createmenu = async (req, res) => {
-    const { estado, horno, finicio, ffin } = req.body;
-    const newCoccion = new menu({
-        estado,
-        horno,
-        finicio,
-        ffin
-    });
-    await newCoccion.save();
-    res.json({ message: 'menu Registrada' })
+    const { imagen, nombre, descripcion, precio } = req.query
+    console.log(req.query);
+    const menu = await pool.query(`INSERT INTO PLATO VALUES ( NULL,'${imagen}', '${nombre}', '${descripcion}', ${precio} )`);
+    res.json({ message: 'Plato Registrado' })
 };
 
-menuCtrl.getcoccion = async (req, res) => {
+menuCtrl.getmenu = async (req, res) => {
     const menu = await menu.findById(req.params.id);
     res.json(menu)
 };
-menuCtrl.updatecoccion = async (req, res) => {
+menuCtrl.updatemenu = async (req, res) => {
     const { estado, horno, finicio, ffin } = req.body;
     await menu.findByIdAndUpdate({_id: req.params.id}, {
         estado,
@@ -32,9 +27,10 @@ menuCtrl.updatecoccion = async (req, res) => {
     res.json({ message: 'menu Actualizada' })
 };
 
-menuCtrl.deletecoccion = async (req, res) => {
-    const menu = await menu.findByIdAndDelete(req.params.id);
-    res.json({ message: 'menu Eliminada' })
+menuCtrl.deletemenu = async (req, res) => {
+    const { id } = req.query
+    const menu = await pool.query(`DELETE FROM PLATO WHERE PLATO.id = ${id}`);
+    res.json({ message: 'Plato Eliminado' })
 };
 
 module.exports = menuCtrl;

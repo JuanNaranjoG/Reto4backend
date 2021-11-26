@@ -9,4 +9,8 @@ const { getmenues,
 
 router.route('/').get(getmenues).post(createmenu);
 
+router.route('/:id').get(getmenu)
+.put(updatemenu)
+.delete(deletemenu);
+
 module.exports = router;
